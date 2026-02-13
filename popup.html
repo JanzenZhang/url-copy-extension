@@ -5,48 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>URL Title Copier</title>
   <link rel="stylesheet" href="style.css">
+  <script src="utils.js"></script>
+  <script src="popup.js" defer></script>
 </head>
 <body class="popup">
-  <div class="container">
+  <div class="app-container">
     <div class="header">
-      <h1>URL Title Copier</h1>
-      <div class="subtitle">v1.1.1</div>
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        <h1>URL Copier</h1>
+      </div>
+      <button class="btn btn-icon" id="open-settings" title="设置">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
     </div>
 
-    <div class="shortcut-info">
-      <div>按下 <span class="shortcut-key">Ctrl</span><span class="shortcut-key">Shift</span><span class="shortcut-key">Y</span> 复制标题和 URL</div>
+    <div class="main-content">
+      <button class="btn btn-primary" id="copy-now" style="height: 48px; font-size: 1rem; margin-bottom: 1.5rem;">
+        立即复制当前页面
+      </button>
+
+      <div class="switch-row">
+        <div class="switch-label">
+          <span class="switch-title">自动复制</span>
+          <span class="switch-desc">页面加载时自动复制</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="auto-enable">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="preview-box">
+        <div class="preview-label">预览</div>
+        <div class="preview-content" id="preview-text">Example Domain - https://example.com</div>
+      </div>
     </div>
 
-    <div class="status" id="status">
-      <span class="status-icon"></span>
-      <span id="status-text">页面内容自动复制已启用</span>
-    </div>
-
-    <div class="toggle-container">
-      <span class="toggle-label">页面内容自动复制</span>
-      <label class="toggle">
-        <input type="checkbox" id="auto-enable">
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
-
-    <button class="button" id="copy-now">立即复制当前页面</button>
-
-    <div class="preview">
-      <div class="preview-label">格式预览</div>
-      <div class="preview-text" id="preview-text"></div>
-    </div>
-
-    <button class="button secondary" id="open-settings">设置</button>
-
-    <div class="divider"></div>
-
-    <div class="footer">
-      <a href="#" id="open-options">打开选项页面</a>
+    <div class="footer-hint">
+      快捷键 <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd>
     </div>
   </div>
-
-  <script src="utils.js"></script>
-  <script src="popup.js"></script>
 </body>
 </html>
