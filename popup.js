@@ -137,11 +137,11 @@ function showCopySuccess() {
 // 显示复制失败
 function showCopyError(message) {
   copyNowBtn.textContent = '✗ 复制失败';
-  copyNowBtn.style.background = '#ef4444';
+  copyNowBtn.classList.add('error');
 
   setTimeout(() => {
     copyNowBtn.textContent = '立即复制当前页面';
-    copyNowBtn.style.background = '';
+    copyNowBtn.classList.remove('error');
   }, 2000);
 
   alert(message);
