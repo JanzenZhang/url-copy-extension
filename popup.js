@@ -12,12 +12,10 @@ const previewTextEl = document.getElementById('preview-text');
 
 // 加载设置
 function loadSettings() {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get({
-      format: 'title-url',
-      separator: ' - ',
-      autoEnable: true
-    }, resolve);
+  return StorageUtils.get({
+    format: 'title-url',
+    separator: ' - ',
+    autoEnable: true
   });
 }
 
@@ -61,7 +59,7 @@ autoEnableEl.addEventListener('change', async () => {
   const settings = await loadSettings();
   settings.autoEnable = autoEnableEl.checked;
 
-  chrome.storage.sync.set(settings, () => {
+  StorageUtils.set(settings).then(() => {
     updateUI(settings);
   });
 });
@@ -69,6 +67,12 @@ autoEnableEl.addEventListener('change', async () => {
 // 立即复制当前页面
 copyNowBtn.addEventListener('click', async () => {
   try {
+    // 检查 chrome.tabs API 是否可用
+    if (typeof chrome === 'undefined' || !chrome.tabs) {
+      showCopyError('开发环境无法获取标签页');
+      return;
+    }
+
     // 获取当前活动标签页
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -149,13 +153,21 @@ function showCopyError(message) {
 
 // 打开设置页面
 openSettingsBtn.addEventListener('click', () => {
-  chrome.runtime.openOptionsPage();
+  if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  } else {
+    window.open('options.html');
+  }
 });
 
 // 打开选项页面链接
 openOptionsLink.addEventListener('click', (e) => {
   e.preventDefault();
-  chrome.runtime.openOptionsPage();
+  if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  } else {
+    window.open('options.html');
+  }
 });
 
 // 初始化

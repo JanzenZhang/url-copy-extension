@@ -23,9 +23,7 @@ const exampleUrl = 'https://example.com';
 
 // 加载设置
 function loadSettings() {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(defaultSettings, resolve);
-  });
+  return StorageUtils.get(defaultSettings);
 }
 
 // 更新 UI
@@ -66,7 +64,7 @@ function saveSettings() {
     separator: separatorEl.value || ' - '
   };
 
-  chrome.storage.sync.set(settings, () => {
+  StorageUtils.set(settings).then(() => {
     // 显示保存成功消息
     saveMessageEl.classList.add('show');
     setTimeout(() => {
@@ -80,7 +78,7 @@ function saveSettings() {
 // 恢复默认设置
 function resetSettings() {
   if (confirm('确定要恢复默认设置吗？')) {
-    chrome.storage.sync.set(defaultSettings, () => {
+    StorageUtils.set(defaultSettings).then(() => {
       updateUI(defaultSettings);
       saveMessageEl.classList.add('show');
       setTimeout(() => {
